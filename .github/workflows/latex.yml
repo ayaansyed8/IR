@@ -19,20 +19,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile LaTeX
+      - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: Updated_Internship_Report.tex
+          root_file: Updated_Intership.tex
           args: -pdf -file-line-error -interaction=nonstopmode
 
-      - name: Create PDF folder
+      - name: Create PDF directory
         run: mkdir -p PDF
 
-      - name: Copy generated PDF
-        run: cp Updated_Internship.pdf PDF/Updated_Internship.pdf
+      - name: Copy compiled PDF
+        run: cp Updated_Intership.pdf PDF/Updated_Intership.pdf
 
-      - name: Commit generated PDF
+      - name: Commit PDF to GitHub
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Automatically update compiled LaTeX PDF"
-          file_pattern: "PDF/Updated_Internship.pdf"
+          commit_message: "Automatically update compiled PDF"
+          file_pattern: "PDF/Updated_Intership.pdf"
+
