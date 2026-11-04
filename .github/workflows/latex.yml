@@ -1,0 +1,38 @@
+
+name: Compile LaTeX and Update PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'PDF/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: "Updated Intership.tex"
+          args: -pdf -file-line-error -interaction=nonstopmode
+
+      - name: Create PDF folder
+        run: mkdir -p PDF
+
+      - name: Copy generated PDF
+        run: cp "Updated Intership.pdf" "PDF/Updated Intership.pdf"
+
+      - name: Commit generated PDF
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Automatically update compiled LaTeX PDF"
+          file_pattern: "PDF/Updated Intership.pdf"
